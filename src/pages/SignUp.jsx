@@ -13,7 +13,7 @@ import FullPageWrapper from "../components/Sign/FullPageWrapper";
 import { CustomLink } from "./SignIn";
 
 import useStateWithValidation from "../hooks/useStateWithValidation";
-import useSignUp from "../hooks/useSignUp";
+import useSignUp from "../hooks/useSign";
 
 const SignUp = () => {
   const [email, handleEmailChange, isEmailValid, emailValidationFailMessage] =
@@ -33,7 +33,7 @@ const SignUp = () => {
     passwordAgainValidationFailMessage,
   ] = useStateWithValidation("password", "");
 
-  const [loginFailMessage, handleSignUp] = useSignUp();
+  const [loginFailMessage, handleSignUp] = useSignUp("signUp");
 
   const history = useHistory();
 
@@ -129,7 +129,7 @@ const MainTypo = styled.h2`
   color: ${(props) => props.theme.color.darkGrey};
 `;
 
-const HelperText = styled.small`
+export const HelperText = styled.small`
   display: ${({ OK }) => (OK ? "none" : "block")};
   text-align: center;
   padding: 8px 0;

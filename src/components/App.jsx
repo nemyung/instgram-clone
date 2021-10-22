@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
+import Permit from "./Permit";
 
 function App() {
   return (
@@ -15,6 +16,13 @@ function App() {
         <Route path="/sign_up">
           <SignUp />
         </Route>
+        <>
+          <Permit>
+            <Route path="/">
+              <h1>로그인 갱신 성공...</h1>
+            </Route>
+          </Permit>
+        </>
       </Switch>
     </MainWrapper>
   );

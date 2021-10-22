@@ -11,19 +11,36 @@ import Branch from "../components/Sign/Branch.jsx";
 import KakaoButton from "../components/Sign/KakaoButton.jsx";
 import SignButton from "../components/Sign/SignButton.jsx";
 import Logo from "../components/Logo.jsx";
+import { HelperText } from "./SignUp.jsx";
+
+import useStateWithValidation from "../hooks/useStateWithValidation.js";
+import useSign from "../hooks/useSign";
 
 const SignIn = () => {
-  const [userId, setUserId] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [failMessage, setFailMessage] = React.useState("");
-  const dispatch = useDispatch();
+  const [email, handleEmailChange, isEmailValid, emailValidationFailMessage] =
+    useStateWithValidation("email", "");
+
+  const [
+    password,
+    handlePasswordChange,
+    isPasswordValid,
+    passwordValidationFailMessage,
+  ] = useStateWithValidation("password", "");
+
+  const [loginFailMessage, login] = useSign("signIn");
+
   const history = useHistory();
 
   const handleLoginButtonClick = async (event) => {
     event.preventDefault();
+    const payload = { email, password };
+    const OK = await login(payload);
+    if (OK) {
+      history.replace("/");
+    }
   };
 
-  const buttonStatus = Boolean(userId) && password.length > 3;
+  const buttonStatus = email && isEmailValid && password && isPasswordValid;
 
   return (
     <FullPageWrapper>
@@ -31,25 +48,29 @@ const SignIn = () => {
         <Logo my="40" />
         <FormControllerWrapper>
           <SignInput
-            labelId="아이디"
+            labelId="이메일"
             type="email"
-            value={userId}
-            placeholder="아이디"
-            onChange={(e) => setUserId(e.target.value)}
-            minLength={3}
-            maxLength={10}
+            value={email}
+            placeholder="이메일.."
+            onChange={(e) => handleEmailChange(e.target.value)}
+            required
           />
+          <HelperText OK={isEmailValid}>
+            {isEmailValid || emailValidationFailMessage}
+          </HelperText>
         </FormControllerWrapper>
         <FormControllerWrapper>
           <SignInput
             labelId="비밀번호"
             type="password"
             value={password}
-            placeholder="비밀번호"
-            onChange={(e) => setPassword(e.target.value)}
-            minLength={4}
-            maxLength={20}
+            placeholder="비밀번호..."
+            onChange={(e) => handlePasswordChange(e.target.value)}
+            required
           />
+          <HelperText OK={isPasswordValid}>
+            {isPasswordValid || passwordValidationFailMessage}
+          </HelperText>
         </FormControllerWrapper>
         <FormControllerWrapper>
           <SignButton
@@ -59,8 +80,8 @@ const SignIn = () => {
           >
             로그인
           </SignButton>
+          {loginFailMessage && <p>{loginFailMessage}</p>}
         </FormControllerWrapper>
-        {failMessage && <p>{failMessage}</p>}
         <Branch />
         <KakaoButton />
       </SignContainer>
