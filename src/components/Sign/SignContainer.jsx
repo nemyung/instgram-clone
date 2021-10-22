@@ -7,7 +7,7 @@ const SignContainer = ({ children, c }) => {
 };
 
 SignContainer.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.arrayOf(PropTypes.element),
   c: PropTypes.bool,
 };
 

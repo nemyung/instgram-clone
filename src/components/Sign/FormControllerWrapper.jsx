@@ -7,7 +7,7 @@ const FormControllerWrapper = ({ children }) => {
 };
 
 FormControllerWrapper.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 
 const Wrapper = styled.div`

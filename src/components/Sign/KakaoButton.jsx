@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import KakaoLoginImageSrc from "../../assets/kakao.png";
 
-const KakaoButton = ({ onClick = () => {} }) => {
+const KakaoButton = ({ onClick }) => {
   return (
     <ButtonImage
       onClick={onClick}
@@ -14,7 +14,11 @@ const KakaoButton = ({ onClick = () => {} }) => {
 };
 
 KakaoButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
+};
+
+KakaoButton.defaultProps = {
+  onClick: () => {},
 };
 
 const ButtonImage = styled.img`

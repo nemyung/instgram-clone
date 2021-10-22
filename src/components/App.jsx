@@ -15,7 +15,6 @@ function App() {
         <Route path="/sign_up">
           <SignUp />
         </Route>
-        <></>
       </Switch>
     </MainWrapper>
   );
